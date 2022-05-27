@@ -1,0 +1,81 @@
+#!/bin/bash
+
+# 1. Execute the command: chmod +x *.sh
+# 2. Compile & test with the command: ./hillcipher-tester.sh hillcipher.xyz
+#    (where xyz is either c, cpp, java, go, or py)
+#    For example: ./hw1Test.sh vigenere.cpp
+
+case $1 in
+vigenere.c)
+	rm -f vigenere
+	gcc vigenere.c -o vigenere
+	compiled=$?
+	if [[ $compiled != 0 ]]; then
+		echo "does not compile"
+		exit 1
+	fi
+	echo "Compiles"
+	EXE="./vigenere"
+	;;
+vigenere.cpp)
+	rm -f vigenere
+	g++ vigenere.cpp -o vigenere
+	compiled=$?
+	if [[ $compiled != 0 ]]; then
+		echo "does not compile"
+		exit 1
+	fi
+	echo "Compiles"
+	EXE="./vigenere"
+	;;
+vigenere.java)
+	rm -f vigenere.class
+	javac vigenere.java
+	compiled=$?
+	if [[ $compiled != 0 ]]; then
+		echo "does not compile"
+		exit 1
+	fi
+	echo "Compiles"
+	EXE="java vigenere"
+	;;
+vigenere.go)
+	rm -f vigenere
+	go build vigenere.go
+	compiled=$?
+	if [[ $compiled != 0 ]]; then
+		echo "does not compile"
+		exit 1
+	fi
+	EXE="./vigenere"
+	;;
+vigenere.py)
+	echo "Compiles"
+	EXE="python3 vigenere.py"
+	;;
+*)
+	echo "Invalid source file name"
+	exit 1
+esac
+
+test_case_num=4
+
+for (( i = 1; i <= test_case_num; i++ ))
+do
+    echo -n "Testcase #$i: "
+    eval $EXE k$i.txt p$i.txt > stu${i}Output.txt
+	executed=$?
+	if [[ $executed !=  0 ]]; then
+		echo ":'("
+		exit 1
+	else
+		diff stu${i}Output.txt c${i}Base.txt &> /dev/null
+		correct=$?
+		if [[ $correct != 0 ]]; then
+			echo ":'("
+			exit 1
+		else
+			echo "───==≡≡ΣΣ((( つºل͜º)つ"
+		fi
+	fi
+done
