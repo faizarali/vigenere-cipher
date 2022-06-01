@@ -2,11 +2,11 @@
 
 - This README is in works. Some details may **not** be fully described at this time.
 
-Developed multiple programs in various different programming languages (Java, Python, C++) that encrypts the alphabetic letters in a file using the Vigenère cipher method.
+These are multiple programs in various different programming languages (Java, Python, C++) that encrypts the alphabetic letters in a file using the Vigenère cipher method.
 
-This program will take two command line parameters containing the names of the file storing the encryption key and the file to be encrypted. The first command line parameter will be the key file and the second command line parameter will be the plaintext file.
+Each program will take two command line parameters containing the names of the file storing the encryption key and the file to be encrypted. The first command line parameter will be the key file and the second command line parameter will be the plaintext file.
 
-The program will output the following to the console (terminal) screen:
+Each program will output the following to the console (terminal) screen:
 ```txt
 1. Print out the input key file
 2. Print out the input plaintext file
