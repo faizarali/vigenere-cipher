@@ -5,7 +5,11 @@
 #include <sstream>
 #include <cctype>
 #include <algorithm>
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
+using std::vector;
+using std::stringstream;
 
 // Helper function for obtaining the alphabetic letters from file.
 bool isNotAlpha(char c) {
@@ -14,13 +18,13 @@ bool isNotAlpha(char c) {
 
 // Print a max of 80 letters per row of the given string.
 void printToConsole(string sFile, int limit) {
-    for (int i = 0; i < sFile.length(); ++i) {
+    for (int i = 0; i < sFile.length(); i++) {
         cout << sFile.at(i);
 
         if ((i + 1) % limit == 0)
-            cout << endl;
+            cout << '\n';
     }
-    cout << endl;
+    cout << '\n';
 }
 
 // Convert the contents of the file into a string (with some modifications).
@@ -69,14 +73,13 @@ string modifyKeyString(string key_string) {
         if (keyTracker >= initialKeyLen)
             keyTracker = 0;
     }
-
     return key_string;
 }
 
 string buildingCiphertext(string key_string, string plaintext_string) {
     string cipher_string = "";
 
-    for (int i = 0; i < plaintext_string.length(); ++i) {
+    for (int i = 0; i < plaintext_string.length(); i++) {
         int plainTextDec = plaintext_string.at(i) - 'a';
         int keyDec = key_string.at(i) - 'a';
 
@@ -86,13 +89,12 @@ string buildingCiphertext(string key_string, string plaintext_string) {
 
         cipher_string.push_back(cipher);
     }
-
     return cipher_string;
 }
 
 int main(int argc, char **argv) {
     if (argc != 3) {
-        std::cerr << "Usage: ./a.out keyFile plaintextFile" << endl;
+        std::cerr << "Usage: ./a.out keyFile plaintextFile" << '\n';
         return 1;
     }
 
@@ -101,33 +103,33 @@ int main(int argc, char **argv) {
 
     string key_string = fileToString(key_arg);
 
-    cout << endl;
-    cout << endl;
+    cout << '\n';
+    cout << '\n';
 
-    cout << "Vigenere Key:" << endl;
-    cout << endl;
+    cout << "Vigenere Key:" << '\n';
+    cout << '\n';
 
     printToConsole(key_string, 80);
 
-    cout << endl;
-    cout << endl;
+    cout << '\n';
+    cout << '\n';
 
     string plaintext_string = makingPlaintext(plaintext_arg);
 
-    cout << "Plaintext:" << endl;
-    cout << endl;
+    cout << "Plaintext:" << '\n';
+    cout << '\n';
 
     printToConsole(plaintext_string, 80);
 
-    cout << endl;
-    cout << endl;
+    cout << '\n';
+    cout << '\n';
 
     key_string = modifyKeyString(key_string);
 
     string cipher_string = buildingCiphertext(key_string, plaintext_string);
 
-    cout << "Ciphertext:" << endl;
-    cout << endl;
+    cout << "Ciphertext:" << '\n';
+    cout << '\n';
 
     printToConsole(cipher_string, 80);
 
