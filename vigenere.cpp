@@ -94,7 +94,7 @@ string buildingCiphertext(string key_string, string plaintext_string) {
     return cipher_string;
 }
 
-int main(int argc, const char** argv) {
+int main(int argc, char **argv) {
     if (argc != 3) {
         std::cerr << "Usage: ./a.out keyFile plaintextFile" << '\n';
         return 1;
