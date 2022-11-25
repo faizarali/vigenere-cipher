@@ -11,9 +11,11 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
+#define LIMIT 80
+
 // Helper function for obtaining the alphabetic letters from file.
 bool isNotAlpha(char c) {
-    return !isalpha(c);
+    return isalpha(c) == 0;
 }
 
 // Print a max of 80 letters per row of the given string.
@@ -28,7 +30,7 @@ void printToConsole(string sFile, int limit) {
 }
 
 // Convert the contents of the file into a string (with some modifications).
-string fileToString(string givenFileName) {
+string fileToString(const string &givenFileName) {
     std::ifstream givenFileNameStream;
 
     givenFileNameStream.open(givenFileName.c_str());
@@ -51,14 +53,14 @@ string fileToString(string givenFileName) {
     return file_string;
 }
 
-string makingPlaintext(string plaintext_arg) {
+string makingPlaintext(const string &plaintext_arg) {
     string plaintext_string = fileToString(plaintext_arg);
 
-    if (plaintext_string.length() < 512)
+    if (plaintext_string.length() < 512) {
         plaintext_string.resize(512, 'x');
-    else if (plaintext_string.length() > 512)
+    } else if (plaintext_string.length() > 512) {
         plaintext_string.resize(512);
-
+    }
     return plaintext_string;
 }
 
@@ -77,7 +79,7 @@ string modifyKeyString(string key_string) {
 }
 
 string buildingCiphertext(string key_string, string plaintext_string) {
-    string cipher_string = "";
+    string cipher_string;
 
     for (int i = 0; i < plaintext_string.length(); i++) {
         int plainTextDec = plaintext_string.at(i) - 'a';
@@ -85,14 +87,14 @@ string buildingCiphertext(string key_string, string plaintext_string) {
 
         int addDec = (plainTextDec + keyDec) % 26;
 
-        char cipher = (char)(addDec + 'a');
+        char cipher = static_cast<char>(addDec + 'a');
 
         cipher_string.push_back(cipher);
     }
     return cipher_string;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, const char** argv) {
     if (argc != 3) {
         std::cerr << "Usage: ./a.out keyFile plaintextFile" << '\n';
         return 1;
@@ -109,7 +111,7 @@ int main(int argc, char **argv) {
     cout << "Vigenere Key:" << '\n';
     cout << '\n';
 
-    printToConsole(key_string, 80);
+    printToConsole(key_string, LIMIT);
 
     cout << '\n';
     cout << '\n';
@@ -119,7 +121,7 @@ int main(int argc, char **argv) {
     cout << "Plaintext:" << '\n';
     cout << '\n';
 
-    printToConsole(plaintext_string, 80);
+    printToConsole(plaintext_string, LIMIT);
 
     cout << '\n';
     cout << '\n';
@@ -131,7 +133,7 @@ int main(int argc, char **argv) {
     cout << "Ciphertext:" << '\n';
     cout << '\n';
 
-    printToConsole(cipher_string, 80);
+    printToConsole(cipher_string, LIMIT);
 
     return 0;
 }
