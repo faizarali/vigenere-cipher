@@ -4,14 +4,12 @@ if len(sys.argv) != 3:
     print('Usage: python3 vigenere.py keyFile plaintextFile')
     sys.exit(1)
 
-
 def read_file(file_name):
     with open(file_name, 'r') as file_name_arg:
         file_str = file_name_arg.read().replace('\n', '').replace(' ', '')
 
     # Only need the alphabetic letter, then make them lowercase.
     return ''.join(filter(str.isalpha, file_str)).lower()
-
 
 key_str = read_file(sys.argv[1])
 
@@ -20,7 +18,6 @@ print()
 
 print('Vigenere Key:')
 print()
-
 
 def print_to_console(text, limit):
     count = 0
@@ -33,12 +30,10 @@ def print_to_console(text, limit):
         count += 1
     print()
 
-
 print_to_console(key_str, 80)
 
 print()
 print()
-
 
 def making_plaintext(plaintext_arg):
     plaintext_arg = read_file(plaintext_arg)
@@ -51,7 +46,6 @@ def making_plaintext(plaintext_arg):
 
     return plaintext_arg
 
-
 plaintext_str = making_plaintext(sys.argv[2])
 
 print('Plaintext:')
@@ -62,35 +56,37 @@ print_to_console(plaintext_str, 80)
 print()
 print()
 
-
-def modify_key_string(key_string):
-    key_init_len = len(key_string)
+def modify_key_string(key_str):
+    key_init_len = len(key_str)
     key_tracker = 0
 
-    while len(key_string) < 512:
-        key_string += key_string[key_tracker]
+    while len(key_str) < 512:
+        key_str += key_str[key_tracker]
         key_tracker += 1
 
         if key_tracker >= key_init_len:
             key_tracker = 0
 
-    return key_string
-
+    return key_str
 
 key_str = modify_key_string(key_str)
 
+def building_ciphertext(key_str, plaintext_str):
+    cipher_str = ""
 
-def building_ciphertext(key_string, plaintext_string):
-    cipher_string = ""
+    # for i in range(len(plaintext_str)):
+    #     plaintext_num = ord(plaintext_str[i]) - ord('a')
+    #     key_num = ord(key_str[i]) - ord('a')
+    #     combined_num = (plaintext_num + key_num) % 26
+    #     cipher_str += chr(combined_num + ord('a'))
 
-    for plaintext_char, key_char in zip(plaintext_string, key_string):
+    for plaintext_char, key_char in zip(plaintext_str, key_str):
         plaintext_num = ord(plaintext_char) - ord('a')
         key_num = ord(key_char) - ord('a')
         combined_num = (plaintext_num + key_num) % 26
-        cipher_string += chr(combined_num + ord('a'))
+        cipher_str += chr(combined_num + ord('a'))
 
-    return cipher_string
-
+    return cipher_str
 
 cipher_str = building_ciphertext(key_str, plaintext_str)
 

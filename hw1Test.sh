@@ -2,7 +2,7 @@
 
 # 1. Execute the command: chmod +x *.sh
 # 2. Compile & test with the command: ./hillcipher-tester.sh hillcipher.xyz
-#    (where xyz is either c, cpp, java, go, or py)
+#    (where xyz is either c, cpp, java, cs, go, or py)
 #    For example: ./hw1Test.sh vigenere.cpp
 
 case $1 in
@@ -38,6 +38,17 @@ vigenere.java)
 	fi
 	echo "Compiles"
 	EXE="java vigenere"
+	;;
+vigenere.cs)
+	rm -f vigenere.exe
+	mcs vigenere.cs
+	compiled=$?
+	if [[ $compiled != 0 ]]; then
+		echo "does not compile"
+		exit 1
+	fi
+	echo "Compiles"
+	EXE="mono vigenere.exe"
 	;;
 vigenere.go)
 	rm -f vigenere
