@@ -63,7 +63,7 @@ public class vigenere {
 
             int addDec = (plainTextDec + keyDec) % 26;
 
-            char cipherChar = (char)(addDec + 'a');
+            char cipherChar = Convert.ToChar(addDec + 'a');
 
             cipherStringSB.Append(cipherChar);
         }
