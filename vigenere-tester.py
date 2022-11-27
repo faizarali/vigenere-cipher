@@ -1,26 +1,38 @@
 import sys
 import subprocess
 
+
 def compile_java(java_file):
-    cmd = 'javac ' + java_file
+    cmd = f'javac {java_file}'
     process = subprocess.Popen(cmd, shell=True)
     process.wait()
     return "java vigenere"
 
+
+def compile_csharp(cs_file):
+    cmd = f'mcs {cs_file}'
+    process = subprocess.Popen(cmd, shell=True)
+    process.wait()
+    return "mono vigenere.exe"
+
+
 def compile_cpp(cpp_file):
-    cmd = 'g++ ' + cpp_file
+    cmd = f'g++ {cpp_file}'
     process = subprocess.Popen(cmd, shell=True)
     process.wait()
     return "./a.out"
 
+
 def compile_c(c_file):
-    cmd = 'gcc ' + c_file
+    cmd = f'gcc {c_file}'
     process = subprocess.Popen(cmd, shell=True)
     process.wait()
     return "./a.out"
+
 
 def compile_py(py_file):
     return "python3 vigenere.py"
+
 
 if len(sys.argv) != 2:
     print('Usage: python3 vigenere-tester.py [filename]')
@@ -34,6 +46,8 @@ elif arg == "vigenere.cpp":
     EXE = compile_cpp(arg)
 elif arg == "vigenere.java":
     EXE = compile_java(arg)
+elif arg == "vigenere.cs":
+    EXE = compile_csharp(arg)
 elif arg == "vigenere.py":
     EXE = compile_py(arg)
 else:
