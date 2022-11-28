@@ -31,7 +31,7 @@ def compile_c(c_file):
 
 
 def compile_py(py_file):
-    return "python3 vigenere.py"
+    return f"python3 {py_file}"
 
 
 if len(sys.argv) != 2:
@@ -54,10 +54,19 @@ else:
     print("Invalid source file name")
     sys.exit(1)
 
-for i in range(1, 5):
-    print(f"Case #{i}")
-    p = subprocess.Popen(EXE + f' k{i}.txt p{i}.txt > stu{i}Output.txt', shell=True)
+test_case_num = 4
+
+for i in range(1, test_case_num + 1):
+    p = subprocess.Popen(f'{EXE} k{i}.txt p{i}.txt > stu{i}Output.txt', shell=True)
     p.wait()
-    p = subprocess.Popen(f'diff stu{i}Output.txt c{i}Base.txt', shell=True)
-    p.wait()
-    print(f"Case #{i} - complete")
+    p = subprocess.Popen(f'diff stu{i}Output.txt c{i}Base.txt &> /dev/null', shell=True)
+    if p.wait() != 0:
+        print(f"Testcase #{i} - :'(")
+        print("->  Your output is incorrect.")
+        print(f"->  Here was the command that was run: diff stu{i}Output.txt c{i}Base.txt")
+        print("->  Output of the diff command is provided below:")
+        p = subprocess.Popen(f'diff stu{i}Output.txt c{i}Base.txt', shell=True)
+        p.wait()
+        sys.exit(1)
+    else:
+        print(f"Testcase #{i}: ───==≡≡ΣΣ((( つºل͜º)つ")

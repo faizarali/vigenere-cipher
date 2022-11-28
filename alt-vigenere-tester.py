@@ -32,7 +32,7 @@ def compile_c(c_file):
 
 
 def compile_py(py_file):
-    return "python3 vigenere.py"
+    return f"python3 {py_file}"
 
 
 if len(sys.argv) != 2:
@@ -55,15 +55,24 @@ else:
     print("Invalid source file name")
     sys.exit(1)
 
-# Accounts for four test cases
-for i in range(1, 5):
-    print(f"Case #{i}")
-    input = EXE + f' k{i}.txt p{i}.txt'
-    command = shlex.split(input)
+test_case_num = 4
+
+for i in range(1, test_case_num + 1):
+    file_input = f'{EXE} k{i}.txt p{i}.txt'
+    command = shlex.split(file_input)
     with open(f'stu{i}Output.txt', "w") as outfile:
         p = subprocess.Popen(command, stdout=outfile)
         p.wait()
-    input = f'diff stu{i}Output.txt c{i}Base.txt'
-    p = subprocess.Popen(shlex.split(input))
-    p.wait()
-    print(f"Case #{i} - complete")
+    file_input = f'diff stu{i}Output.txt c{i}Base.txt'
+    p = subprocess.Popen(shlex.split(file_input), stdout=subprocess.DEVNULL)
+    if p.wait() != 0:
+        print(f"Testcase #{i} - :'(")
+        print("->  Your output is incorrect.")
+        print(f"->  Here was the command that was run: diff stu{i}Output.txt c{i}Base.txt")
+        print("->  Output of the diff command is provided below:")
+        file_input = f'diff stu{i}Output.txt c{i}Base.txt'
+        p = subprocess.Popen(shlex.split(file_input))
+        p.wait()
+        sys.exit(1)
+    else:
+        print(f"Testcase #{i}: ───==≡≡ΣΣ((( つºل͜º)つ")
