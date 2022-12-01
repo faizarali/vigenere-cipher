@@ -21,6 +21,8 @@ def check_if_file_compiles(cmd):
     if len(str(proc.stderr)) > 0:
         print('Ugh oh... Your program has warning/error messages!')
         sys.exit(1)
+    else:
+        print('Compiles')
 
 
 def compile_java(java_file):
