@@ -53,7 +53,7 @@ def compile_c(c_file):
         print('does not compile')
         sys.exit(1)
     return './a.out'
-    
+
 
 def compile_go(go_file):
     cmd = f'go build {go_file}'
@@ -62,6 +62,10 @@ def compile_go(go_file):
         print('does not compile')
         sys.exit(1)
     return './vigenere'
+
+
+def compile_js(js_file):
+    return f'node {js_file}'
 
 
 def compile_py(py_file):
@@ -84,6 +88,8 @@ elif arg == 'vigenere.java':
     EXE = compile_java(arg)
 elif arg == 'vigenere.cs':
     EXE = compile_csharp(arg)
+elif arg == 'vigenere.js':
+    EXE = compile_js(arg)
 elif arg == 'vigenere.go':
     EXE = compile_go(arg)
 elif arg == 'vigenere.py':

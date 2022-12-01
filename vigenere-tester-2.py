@@ -46,6 +46,10 @@ def compile_go(go_file):
     cmd = f'go build {go_file}'
     check_if_file_compiles(cmd)
     return './vigenere'
+    
+
+def compile_js(js_file):
+    return f'node {js_file}'
 
 
 def compile_py(py_file):
@@ -61,6 +65,8 @@ def compile_file(arg):
         return compile_csharp(arg)
     elif arg.lower().endswith('.go'):
         return compile_go(arg)
+    elif arg.lower().endswith('.js'):
+        return compile_js(arg)
     elif arg.lower().endswith('.py'):
         return compile_py(arg)
     else:

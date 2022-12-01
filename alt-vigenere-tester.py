@@ -66,6 +66,10 @@ def compile_go(go_file):
     return './vigenere'
 
 
+def compile_js(js_file):
+    return f'node {js_file}'
+
+
 def compile_py(py_file):
     return f'python3 {py_file}'
 
@@ -88,6 +92,8 @@ elif arg == 'vigenere.cs':
     EXE = compile_csharp(arg)
 elif arg == 'vigenere.go':
     EXE = compile_go(arg)
+elif arg == 'vigenere.js':
+    EXE = compile_js(arg)
 elif arg == 'vigenere.py':
     EXE = compile_py(arg)
 else:

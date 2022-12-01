@@ -60,6 +60,10 @@ vigenere.go)
 	fi
 	EXE="./vigenere"
 	;;
+vigenere.js)
+	echo "Compiles"
+	EXE="node vigenere.js"
+	;;
 vigenere.py)
 	echo "Compiles"
 	EXE="python3 vigenere.py"
