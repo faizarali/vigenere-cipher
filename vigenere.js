@@ -1,5 +1,10 @@
 let arguments = process.argv;
 
+if (arguments.length != 4) {
+    console.error('Usage: node vigenere.js keyFile plaintextFile');
+    process.exit(1);
+}
+
 // get filesystem module
 const fs = require("fs");
 
