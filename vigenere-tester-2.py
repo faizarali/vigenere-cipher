@@ -84,11 +84,13 @@ def testcase_checker(exe):
     error_checker_1 = subprocess.run([f'{exe}'], capture_output=True, text=True, shell=True)
     error_checker_2 = subprocess.run([f'{exe} k1.txt'], capture_output=True, text=True, shell=True)
 
-    if (len(str(error_checker_1.stderr)) <= 0 or len(str(error_checker_2.stderr)) <= 0):
-        print('Ugh oh... You seem to be having issues with the command line arguments. Make sure you output your error checking to stderr.')
+    if len(str(error_checker_1.stderr)) <= 0 or len(str(error_checker_2.stderr)) <= 0:
+        print('Ugh oh... You seem to be having issues with the command line arguments. Make sure you output your '
+              'error checking to stderr.')
         return
-    elif (len(str(error_checker_1.stdout)) != 0 or len(str(error_checker_2.stdout)) != 0):
-        print('Issue: Your program might be either hardcoding filenames in the source code and/or not handling error checking correctly. Please fix this issue.')
+    elif len(str(error_checker_1.stdout)) != 0 or len(str(error_checker_2.stdout)) != 0:
+        print('Issue: Your program might be either hard coding filenames in the source code and/or not handling error '
+              'checking correctly. Please fix this issue.') 
         return
 
     for i in range(1, test_case_num+1):
