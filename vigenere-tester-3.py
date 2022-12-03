@@ -1,5 +1,6 @@
 import sys
 import subprocess
+import functools
 
 
 def delete_exe(arg):
@@ -94,18 +95,26 @@ def testcase_checker(exe):
     for i in range(1, test_case_num+1):
         subprocess.run([f'{exe} k{i}.txt p{i}.txt > stu{i}Output.txt'], capture_output=True, text=True,
                        shell=True)
-        proc = subprocess.run([f'diff stu{i}Output.txt c{i}Base.txt'], capture_output=True,
-                              text=True, shell=True)
 
-        if proc.returncode != 0:
+        # read output from each text file
+        with open(f'stu{i}Output.txt', "r") as f1:
+            l1 = f1.readlines()
+
+        with open(f'c{i}Base.txt', "r") as f2:
+            l2 = f2.readlines()
+
+        # compare the content read
+        if len(l1) == len(l2) and functools.reduce(lambda x, y : x and y, map(lambda p, q: p == q, l1, l2), True):
+            print(f'Testcase #{i}: ───==≡≡ΣΣ((( つºل͜º)つ')
+        else:
             print(f'Testcase #{i} - :\'(')
             print('->  Your output is incorrect.')
             print(f'->  Here was the command that was run: diff stu{i}Output.txt c{i}Base.txt')
             print('->  Output of the diff command is provided below:')
+            proc = subprocess.run([f'diff stu{i}Output.txt c{i}Base.txt'], capture_output=True,
+                                  text=True, shell=True)
             print(proc.stdout)
             return
-        else:
-            print(f'Testcase #{i}: ───==≡≡ΣΣ((( つºل͜º)つ')
 
 
 def main():

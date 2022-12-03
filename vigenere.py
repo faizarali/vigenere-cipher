@@ -1,9 +1,5 @@
 import sys
 
-if len(sys.argv) != 3:
-    print('Usage: python3 vigenere.py keyFile plaintextFile')
-    sys.exit(1)
-
 
 def read_file(file_name):
     with open(file_name, 'r') as file_name_arg:
@@ -11,15 +7,6 @@ def read_file(file_name):
 
     # Only need the alphabetic letter, then make them lowercase.
     return ''.join(filter(str.isalpha, file_str)).lower()
-
-
-key_str = read_file(sys.argv[1])
-
-print()
-print()
-
-print('Vigenere Key:')
-print()
 
 
 def print_to_console(text, limit):
@@ -34,12 +21,6 @@ def print_to_console(text, limit):
     print()
 
 
-print_to_console(key_str, 80)
-
-print()
-print()
-
-
 def making_plaintext(plaintext_arg):
     plaintext_arg = read_file(plaintext_arg)
 
@@ -50,17 +31,6 @@ def making_plaintext(plaintext_arg):
         plaintext_arg = plaintext_arg[:512]
 
     return plaintext_arg
-
-
-plaintext_str = making_plaintext(sys.argv[2])
-
-print('Plaintext:')
-print()
-
-print_to_console(plaintext_str, 80)
-
-print()
-print()
 
 
 def modify_key_string(key_string):
@@ -77,9 +47,6 @@ def modify_key_string(key_string):
     return key_string
 
 
-key_str = modify_key_string(key_str)
-
-
 def building_ciphertext(key_string, plaintext_string):
     cipher_string = ""
 
@@ -92,9 +59,43 @@ def building_ciphertext(key_string, plaintext_string):
     return cipher_string
 
 
-cipher_str = building_ciphertext(key_str, plaintext_str)
+def main():
+    if len(sys.argv) != 3:
+        print('Usage: python3 vigenere.py keyFile plaintextFile', file=sys.stderr)
+        sys.exit(1)
 
-print('Ciphertext:')
-print()
+    key_str = read_file(sys.argv[1])
 
-print_to_console(cipher_str, 80)
+    print()
+    print()
+
+    print('Vigenere Key:')
+    print()
+
+    print_to_console(key_str, 80)
+
+    print()
+    print()
+
+    plaintext_str = making_plaintext(sys.argv[2])
+
+    print('Plaintext:')
+    print()
+
+    print_to_console(plaintext_str, 80)
+
+    print()
+    print()
+
+    key_str = modify_key_string(key_str)
+
+    cipher_str = building_ciphertext(key_str, plaintext_str)
+
+    print('Ciphertext:')
+    print()
+
+    print_to_console(cipher_str, 80)
+
+
+if __name__ == "__main__":
+    main()
