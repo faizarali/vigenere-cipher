@@ -1,17 +1,18 @@
 import sys
 import subprocess
 import functools
+import os
 
 
-def delete_exe(arg):
+def delete_exe(arg, base):
     if arg.lower().endswith(('.c', '.cpp')):
         cmd = 'rm -f a.out'
     elif arg.lower().endswith('.java'):
-        cmd = 'rm -f vigenere.class'
+        cmd = f'rm -f {base}.class'
     elif arg.lower().endswith('.cs'):
-        cmd = 'rm -f vigenere.exe'
+        cmd = f'rm -f {base}.exe'
     elif arg.lower().endswith('.go'):
-        cmd = 'rm -f vigenere'
+        cmd = f'rm -f {base}'
     else:
         return
     subprocess.run([cmd], capture_output=True, text=True, shell=True)
@@ -26,16 +27,16 @@ def check_if_file_compiles(cmd):
         print('Compiles')
 
 
-def compile_java(java_file):
+def compile_java(java_file, base):
     cmd = f'javac {java_file}'
     check_if_file_compiles(cmd)
-    return 'java vigenere'
+    return f'java {base}'
 
 
-def compile_csharp(cs_file):
+def compile_csharp(cs_file, base):
     cmd = f'mcs {cs_file}'
     check_if_file_compiles(cmd)
-    return 'mono vigenere.exe'
+    return f'mono {base}.exe'
 
 
 def compile_c_cpp(c_cpp_file):
@@ -45,10 +46,10 @@ def compile_c_cpp(c_cpp_file):
     return './a.out'
 
 
-def compile_go(go_file):
+def compile_go(go_file, base):
     cmd = f'go build {go_file}'
     check_if_file_compiles(cmd)
-    return './vigenere'
+    return f'./{base}'
 
 
 def compile_js(js_file):
@@ -61,15 +62,15 @@ def compile_py(py_file):
     return f'python3 {py_file}'
 
 
-def compile_file(arg):
+def compile_file(arg, base):
     if arg.lower().endswith(('.c', '.cpp')):
         return compile_c_cpp(arg)
     elif arg.lower().endswith('.java'):
-        return compile_java(arg)
+        return compile_java(arg, base)
     elif arg.lower().endswith('.cs'):
-        return compile_csharp(arg)
+        return compile_csharp(arg, base)
     elif arg.lower().endswith('.go'):
-        return compile_go(arg)
+        return compile_go(arg, base)
     elif arg.lower().endswith('.js'):
         return compile_js(arg)
     elif arg.lower().endswith('.py'):
@@ -125,10 +126,11 @@ def main():
         sys.exit(1)
 
     arg = sys.argv[1]
-    delete_exe(arg)
-    exe = compile_file(arg)
+    base, ext = os.path.splitext(arg)
+    delete_exe(arg, base)
+    exe = compile_file(arg, base)
     testcase_checker(exe)
-    delete_exe(arg)
+    delete_exe(arg, base)
 
 
 if __name__ == "__main__":
