@@ -76,7 +76,7 @@ def compile_file(arg, base):
     elif arg.lower().endswith('.py'):
         return compile_py(arg)
     else:
-        print('Invalid source file name')
+        print('Invalid source file name', file=sys.stderr)
         sys.exit(1)
 
 
@@ -112,7 +112,7 @@ def testcase_checker(exe):
         else:
             print(f'Testcase #{i} - :\'(')
             print('->  Your output is incorrect.')
-            print(f'->  Here was the command that was run: diff stu{i}Output.txt c{i}Base.txt')
+            print(f'->  Please use this command: diff stu{i}Output.txt c{i}Base.txt')
             print('->  Output of the diff command is provided below:')
             proc = subprocess.run([f'diff stu{i}Output.txt c{i}Base.txt'], capture_output=True,
                                   text=True, shell=True)
